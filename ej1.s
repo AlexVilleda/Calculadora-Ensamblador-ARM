@@ -54,8 +54,7 @@ _exit:
 //string: .asciz	"\nFloating point value is: %f\n"
 msj1:	.asciz	"\n\n\tCALCULADORA DE FLOTANTES\n\nIngrese el valor del numero 1: "
 msj2:	.asciz	"\nIngrese el valor del numero 2: "
-msj3:	.asciz	"\nLa suma  es: %fl\n\n"
-n1:	.float	0
-n2:	.float	0
-fmt:	.asciz	"%fl"
-
+msj3:	.asciz	"\nLa suma  es: %f\n\n"
+n1:	.single	0
+n2:	.single	0
+fmt:	.asciz	"%f"
