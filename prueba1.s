@@ -57,7 +57,7 @@ _lecturaTipoDeOperacion:
 	BEQ	_exit				//Si num1=0, salir de la calculadora
 
 /*NOTA: Debido a que para la operacíon de potenciación se necesitará mostrar mensajes diferentes al solicitar los datos de entrada,
-        que debe ser Base y exponente los que se requieren, se validará si selecciono la opción de potenciación para que salte 
+        que debe ser Base y exponente los que se requieren, se validará si selecciono la opción de potenciación para que salte
         directamente a la etiqueta de _potenciacion, y haga su proceso interno, con los mensajes adecuados*/
 
         //PROCESO DE VALIDACIÓN PARA SABER SI SELECCIONE LA OPERACIÓN 4 QUE REPRESENTA LA POTENCIACIÓN
@@ -79,8 +79,8 @@ _lecturaTipoDeOperacion:
 	LDR     R0, =fmt1
 	LDR     R1, =op2
 	BL      scanf
-        
-        
+
+
 //Saltamos al tipo de operación elegida
 //Nota: Cada vez que hacemos una comparacion con CMP, el registro utilizado pierde su valor, así que para volverlo a utilizar, debemos volver a cargar el valor en el registro deseado
 
@@ -160,9 +160,9 @@ _potenciacion:
 	LDR     R0, =fmt1
 	LDR     R1, =op2
 	BL      scanf
-        
+
         //PROCESO PARA REALIZAR LA OPERACIÓN DE POTENCIACIÓN
-        LDR     R1, =op1      //asignamos a un registro el operando 1 que representa la base 
+        LDR     R1, =op1      //asignamos a un registro el operando 1 que representa la base
         LDR     R1, [R1]
         MOV     R2, R1        //Movemos el valor de la base al Registro R2 para utilizar ese registro como la base al realizar el calculo
         MOV     R4, #1        //Iniciamos el contador en el R4 con el valor de 1
@@ -173,13 +173,13 @@ _potenciacion:
         BEQ     _resultado1   //Si el resultado de la comparación anterior es igual a 0, salta a la etiqueta _resultado1
         CMP     R4, R3        //Compara el contador con el valor del exponente
         BGE     _resultado    //Si de la instruccion anterior R4 es mayor que R3, salta a la etiqueta _resultado
-        BLT     _operacion    //Si de la instrucción anterior R4 es menor que R3, salta a la etiqueta _operación 
-        
-    _operacion:               //Calcular  la potencia del numero con multiplicaciones sucesivas         
+        BLT     _operacion    //Si de la instrucción anterior R4 es menor que R3, salta a la etiqueta _operación
+
+    _operacion:               //Calcular  la potencia del numero con multiplicaciones sucesivas
         MUL     R1, R1, R2    //Multiplica la base R2, por el valor acumulado en R1
         ADD     R4, #1        //Aumenta el contador en 1
         BAL     _loop         //salta siempre a la etiqueta _loop
-       
+
     _resultado:               //Contiene el resultado, cuando el exponenete es diferente de cero
         LDR     R0, =msj10
         BL      printf
@@ -206,8 +206,8 @@ _salirDeCalculadora:
 	LDR	R3, =salir
 	LDR	R3, [R3]
 	CMP	R3, #1		//Si salir = 1, se cerrará la calculadora
-	BEQ	_exit
-	BAL	_salirDeCalculadora
+	//BEQ	_exit
+	BNE	_salirDeCalculadora
 
 _exit:
 	POP     {PC}
