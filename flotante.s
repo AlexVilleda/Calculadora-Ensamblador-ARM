@@ -9,15 +9,15 @@ msj6:   .asciz  "\nIngrese el valor del exponente: "
 msj7:   .asciz  "\nEl resultado de la SUMA es: %f "
 msj8:   .asciz  "\nEl resultado de la RESTA es: %f "
 msj9:   .asciz  "\nEl resultado de la MULTIPLICACIÓN es: %f "
-msj10:   .asciz  "\nEl resultado de la POTENCIACIÓN es: %f "
-msj11:   .asciz  "\n\n\n¿DESEA SALIR DE LA CALCULADORA?\t( SÍ = 1 | NO = 0)\n\t¿Salir? : "
+msj10:  .asciz  "\nEl resultado de la POTENCIACIÓN es: %f "
+msj11:  .asciz  "\n\n\n¿DESEA SALIR DE LA CALCULADORA?\t( SÍ = 1 | NO = 0)\n\t¿Salir? : "
 msj12:	.asciz  "\n¡El número ingresado debe ser un entero entre 0 y 4!\n"
 num1:	.word 0		//Contendrá el valor de la operacion aritmética seleccionada
 uno:    .single 1.0     //Variable de tipo flotante inicializada en uno, que se utilizará en el proceso
 salir:	.word 1		//Utilizada para indicar si cerrar la calculadora o continuar
 op1:	.single 0      	//Operando 1 en formato flotante, En la operación de potencia representa la base
 op2:	.single 0      	//Operando 2 en formato flotante, En la operación de potencia representa el exponente
-fmt1:   .asciz  "%d"    //Formato de tipo entero 
+fmt1:   .asciz  "%d"    //Formato de tipo entero
 fmt2:   .asciz  "%f"    //Formato de tipo flotante
 
 	.text
@@ -105,13 +105,13 @@ _lecturaTipoDeOperacion:
 	LDR	R3, =num1
 	LDR	R3, [R3]
 	CMP	R3, #4
-	BEQ	_potenciacion 
+	BEQ	_potenciacion
 
 _suma:
 	//CARGAMOS LOS 2 OPERANDOS EN MEMORIA A SUS RESPECTIVOS REGISTROS
-	LDR	R0, =op1                    
+	LDR	R0, =op1
 	VLDR	S1, [R0]                    //Cargamos el valor del R0 en un registro S1 de 32 bits de tipo flotante
-	LDR	R1, =op2                    
+	LDR	R1, =op2
 	VLDR	S2, [R1]                    //Cargamos el valor del R1 en un registro S2 de 32 bits de tipo flotante
 
 	//REALIZAMOS LA OPERACIÓN DE SUMA
@@ -175,7 +175,7 @@ _potenciacion:
         LDR     R1, =op1                //asignamos a un registro la direccion del operando 1 que representa la base
         VLDR    S1, [R1]                //Asignamos  un registro de punto flotante el valor del registro R1
         VMOV    S2, S1                  //Movemos el valor de la base al Registro S2 para utilizar ese registro como la base al realizar el calculo
-        LDR     R5, =uno                //asignamos a un registro la variable uno 
+        LDR     R5, =uno                //asignamos a un registro la variable uno
         VLDR    S5, [R5]                //Asignamos  un registro de punto flotante el valor del registro R5
         VMOV    S4, S5                  //Iniciamos el contador en S4 con el valor que contiene el registro de punto flotante S5 (S5==1)
     _loop:                              //Ciclo que se repetirá la cantidad de veces que representa el exponente para realizar el cálculo
@@ -194,14 +194,14 @@ _potenciacion:
 
     _resultado:                         //Contiene el resultado, cuando el exponenete es diferente de cero
         LDR             R0, =msj10
-        VCVT.F64.F32	D3, S1          //Convierte el registro S1(32 bits) a D3(64 bits), para imprimir  
+        VCVT.F64.F32	D3, S1          //Convierte el registro S1(32 bits) a D3(64 bits), para imprimir
         VMOV            R2, R3, D3      //Mueve el valor del registro D3(64 bits) a (R2, R3) de 32 bits para que estos se utilicen en la impresion
-        BL              printf          
+        BL              printf
         BL              _salirDeCalculadora
     _resultado1:                        //Contiene el resultado, cuando el exponenete es igual a cero
         LDR             R0, =msj10
         VMOV            S1, S5          //Mueve el registro S5 (S5==1) al registro S1
-        VCVT.F64.F32	D3, S1          //Convierte el registro S1(32 bits) a D3(64 bits), para imprimir  
+        VCVT.F64.F32	D3, S1          //Convierte el registro S1(32 bits) a D3(64 bits), para imprimir
         VMOV            R2, R3, D3      //Mueve el valor del registro D3(64 bits) a (R2, R3) de 32 bits para que estos se utilicen en la impresion
         BL              printf
         BL              _salirDeCalculadora
